@@ -38,23 +38,52 @@
 
 /* Card variant: "Hero (card)" — a promo card with an eyebrow, status pill,
    meta line and description next to the image, instead of a full-bleed
-   background banner. One field per table row, in this order:
-   1 Eyebrow, 2 Heading, 3 Status, 4 Meta, 5 Description, 6 Image. */
+   background banner. One row, two cells: first cell holds 5 plain
+   paragraphs (eyebrow, heading, status, meta, description, in that order),
+   second cell holds the image. */
 .hero.card {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
   padding: 32px 20px;
   min-height: 0;
   border-radius: 16px;
   background: linear-gradient(135deg, var(--background-color) 0%, #eef3ff 60%, #dbe6ff 100%);
 }
 
-.hero.card > div:nth-child(1) {
+.hero.card > div {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hero.card > div > div:first-child p {
   margin: 0;
   color: var(--dark-color);
+}
+
+.hero.card > div > div:first-child p:nth-of-type(1) {
   font-weight: 600;
+  font-size: var(--body-font-size-xs);
+}
+
+.hero.card > div > div:first-child p:nth-of-type(2) {
+  color: var(--text-color);
+  font-weight: 700;
+  font-size: var(--heading-font-size-s);
+  line-height: 1.25;
+}
+
+.hero.card > div > div:first-child p:nth-of-type(3) {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background-color: #f4ddfb;
+  color: #7c1fa0;
+  font-weight: 600;
+  font-size: var(--body-font-size-xs);
+}
+
+.hero.card > div > div:first-child p:nth-of-type(4) {
   font-size: var(--body-font-size-xs);
 }
 
@@ -65,34 +94,13 @@
   font-size: var(--heading-font-size-s);
 }
 
-.hero.card > div:nth-child(3) {
-  display: inline-flex;
-  justify-self: start;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background-color: #f4ddfb;
-  color: #7c1fa0;
-  font-weight: 600;
-  font-size: var(--body-font-size-xs);
-}
-
-.hero.card > div:nth-child(4) {
-  color: var(--dark-color);
-  font-size: var(--body-font-size-xs);
-}
-
-.hero.card > div:nth-child(5) {
-  margin: 4px 0 0;
-  color: var(--dark-color);
-}
-
-.hero.card > div:nth-child(6) {
+.hero.card > div > div:last-child {
   position: relative;
   max-width: 320px;
-  margin: 12px auto 0;
+  margin: 0 auto;
 }
 
-.hero.card > div:nth-child(6)::before {
+.hero.card > div > div:last-child::before {
   content: "";
   position: absolute;
   inset: 16px -16px -16px 16px;
@@ -118,18 +126,15 @@
 }
 
 @media (width >= 900px) {
-  .hero.card {
-    grid-template-columns: 1fr 320px;
-    grid-template-rows: repeat(5, auto);
-    align-content: center;
-    gap: 12px 48px;
+  .hero.card > div {
+    flex-direction: row;
+    align-items: center;
+    gap: 48px;
   }
 
-  .hero.card > div:nth-child(6) {
-    grid-row: 1 / 6;
-    grid-column: 2;
-    align-self: center;
-    max-width: none;
+  .hero.card > div > div:last-child {
+    flex-shrink: 0;
+    width: 320px;
     margin: 0;
   }
 }
